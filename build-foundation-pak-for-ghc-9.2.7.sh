@@ -79,9 +79,9 @@ git submodule update --init --recursive
 ./boot
 ./configure
 
-./hadrian/build-stack foundation-pak -j
+./hadrian/build-stack foundation-pak -j --docs=no-sphinx
 
-./hadrian/build-stack binary-dist-xz -j
+./hadrian/build-stack binary-dist-xz -j --docs=none
 
 ############
 # output foundation pak and ghc-9.2.7-wpc bindist

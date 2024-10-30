@@ -51,8 +51,9 @@ patch_hadrian_set_final_stage_to_stage3() {(
 )}
 
 build_stage3_ghc_with_wpc_plugin() {(
+  WORK_DIR=`pwd`
   cd ghc-9.10.1
-  WPC_PLUGIN_GHC_OPTS="stage2.*.ghc.*.opts += -fplugin-trustworthy -fplugin-library=/home/csaba/haskell/grin-compiler/ghc-whole-program-compiler-project/wpc-plugin/libwpc-plugin.so;wpc-plugin-unit;WPC.Plugin;[]"
+  WPC_PLUGIN_GHC_OPTS="stage2.*.ghc.*.opts += -fplugin-trustworthy -fplugin-library=$WORK_DIR/ghc-whole-program-compiler-project/wpc-plugin/libwpc-plugin.so;wpc-plugin-unit;WPC.Plugin;[]"
   hadrian/build-stack -j "$WPC_PLUGIN_GHC_OPTS"
   hadrian/build-stack -j foundation-pak --docs=none "$WPC_PLUGIN_GHC_OPTS"
 )}
@@ -95,5 +96,4 @@ build_stage3_ghc_with_wpc_plugin
 # output foundation pak and ghc-9.2.7-wpc bindist
 ############
 
-ls -lah `pwd`/_build/foundation-pak/*.xz
-ls -lah `pwd`/_build/bindist/*.xz
+ls -lah `pwd`/ghc-9.10.1/_build/foundation-pak/*.tar.*

@@ -1,0 +1,39 @@
+From b7d422c4ef11d0130071c52c5cfe61440686d38c Mon Sep 17 00:00:00 2001
+From: Csaba Hruska <csaba.hruska@gmail.com>
+Date: Tue, 22 Oct 2024 15:19:57 +0200
+Subject: [PATCH] wpc
+
+---
+ Cabal-3.10.3.0/src/Distribution/Simple/GHC.hs | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/Cabal-3.10.3.0/src/Distribution/Simple/GHC.hs b/Cabal-3.10.3.0/src/Distribution/Simple/GHC.hs
+index a9c5141..95ba337 100644
+--- a/Cabal-3.10.3.0/src/Distribution/Simple/GHC.hs
++++ b/Cabal-3.10.3.0/src/Distribution/Simple/GHC.hs
+@@ -2004,6 +2004,9 @@ installLib verbosity lbi targetDir dynlibTargetDir _builtDir pkg lib clbi = do
+   whenProf    $ copyModuleFiles "p_hi"
+   whenShared  $ copyModuleFiles "dyn_hi"
+ 
++  -- copy extra compilation artifacts that ghc plugins may produce
++  copyDirectoryIfExists "extra-compilation-artifacts"
++
+   -- copy the built library files over:
+   whenHasCode $ do
+     whenVanilla $ do
+@@ -2078,6 +2081,12 @@ installLib verbosity lbi targetDir dynlibTargetDir _builtDir pkg lib clbi = do
+       findModuleFilesEx verbosity [builtDir] [ext] (allLibModules lib clbi)
+       >>= installOrdinaryFiles verbosity targetDir
+ 
++    copyDirectoryIfExists dirName = do
++      let src = builtDir </> dirName
++          dst = targetDir </> dirName
++      dirExists <- doesDirectoryExist src
++      when dirExists $ copyDirectoryRecursive verbosity src dst
++
+     compiler_id = compilerId (compiler lbi)
+     platform = hostPlatform lbi
+     uid = componentUnitId clbi
+-- 
+2.43.0
+

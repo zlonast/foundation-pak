@@ -58,14 +58,6 @@ build_stage3_ghc_with_wpc_plugin() {(
   hadrian/build-stack -j foundation-pak --docs=none "$WPC_PLUGIN_GHC_OPTS"
 )}
 
-todo_wpc_plugin_build(){
-  # todo build wpc-plugin with stage1 ghc
-  echo "TODO: checkout and build wpc-plugin with stage1 ghc"
-  pwd
-  echo "place it to /home/csaba/haskell/grin-compiler/ghc-whole-program-compiler-project/wpc-plugin/libwpc-plugin.so"
-  read -p "Then press ENTER"
-}
-
 build_wpc_plugin_with_stage2_ghc() {(
   STAGE2_GHC=`pwd`/ghc-9.10.1/_build/stage1/bin/ghc
   git clone https://github.com/grin-compiler/ghc-whole-program-compiler-project.git

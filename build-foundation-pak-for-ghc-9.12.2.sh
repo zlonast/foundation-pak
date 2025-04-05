@@ -2,14 +2,6 @@ set -x -e
 # set -u
 # set -o pipefail
 
-install_ghc_build_tools() {
-  cabal install --overwrite-policy=always alex-3.5.1.0 zip-cmd-1.0.1
-}
-
-download_ghc_source_code() {
-  wget https://downloads.haskell.org/~ghc/9.12.2/ghc-9.12.2-src.tar.xz
-}
-
 unpack_ghc_source_code_and_add_hadrian_to_git() {(
   tar xf ghc-9.12.2-src.tar.xz
 
@@ -21,7 +13,7 @@ unpack_ghc_source_code_and_add_hadrian_to_git() {(
 )}
 
 patch_hadrian_source_code() {(
-  cd ghc-9.12.2
+  cd ghc-9.12.2/hadrian
   git init
   set +e
   git am < ../../patch/ghc-9.12.2/hadrian/0001-wpc-9.12.2.patch
@@ -55,7 +47,7 @@ build_wpc_plugin_with_stage2_ghc() {(
 
 
 patch_hadrian_set_final_stage_to_stage3() {(
-  cd ghc-9.12.2
+  cd ghc-9.12.2/hadrian
   git am < ../../patch/ghc-9.12.2/hadrian/0002-set-final-stage-to-stage3.patch
 )}
 
@@ -72,8 +64,8 @@ cd foundation-pak-ghc-9.12.2-wpc
 
 ghcup set ghc 9.10.1
 
-# install_ghc_build_tools
-# download_ghc_source_code
+# cabal install --overwrite-policy=always alex-3.5.1.0 zip-cmd-1.0.1
+# wget https://downloads.haskell.org/~ghc/9.12.2/ghc-9.12.2-src.tar.xz
 unpack_ghc_source_code_and_add_hadrian_to_git
 patch_hadrian_source_code
 build_stage2_ghc

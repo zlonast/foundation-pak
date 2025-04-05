@@ -1,0 +1,22 @@
+From 0576a7bffda28351b4bb63b35bdc77752ac05913 Mon Sep 17 00:00:00 2001
+From: zlonast <zlonast3@gmail.com>
+Date: Sat, 5 Apr 2025 19:58:28 +0300
+Subject: [PATCH 2/2] set final stage to stage3
+
+---
+ src/UserSettings.hs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/UserSettings.hs b/src/UserSettings.hs
+index 5920b57..952a2d9 100644
+--- a/src/UserSettings.hs
++++ b/src/UserSettings.hs
+@@ -62,4 +62,4 @@ successColour = mkSuccessColour (Dull Green)
+ -- 'Stage1' compiler. Setting it to 'Stage3' will build the 'Stage3'
+ -- compiler. Setting it to 'Stage0' will mean nothing gets built at all.
+ finalStage :: Stage
+-finalStage = Stage2
++finalStage = Stage3
+-- 
+2.43.0
+

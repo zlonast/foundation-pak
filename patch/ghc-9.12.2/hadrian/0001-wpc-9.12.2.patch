@@ -1,0 +1,50 @@
+From d685f559a9d0aa7db938c723e0de5f3657b25637 Mon Sep 17 00:00:00 2001
+From: zlonast <zlonast3@gmail.com>
+Date: Sat, 5 Apr 2025 19:58:13 +0300
+Subject: [PATCH 1/2] wpc 9.12.2
+
+---
+ hadrian.cabal    | 1 +
+ src/Rules.hs     | 2 ++
+ src/Rules/WPC.hs | 0
+ 3 files changed, 3 insertions(+)
+ create mode 100644 src/Rules/WPC.hs
+
+diff --git a/hadrian.cabal b/hadrian.cabal
+index 991c454..979238a 100644
+--- a/hadrian.cabal
++++ b/hadrian.cabal
+@@ -75,6 +75,7 @@ executable hadrian
+                        , Oracles.TestSettings
+                        , Packages
+                        , Rules
++                       , Rules.WPC
+                        , Rules.BinaryDist
+                        , Rules.CabalReinstall
+                        , Rules.Clean
+diff --git a/src/Rules.hs b/src/Rules.hs
+index 55de341..536c9e0 100644
+--- a/src/Rules.hs
++++ b/src/Rules.hs
+@@ -14,6 +14,7 @@ import Expression
+ import qualified Oracles.Flavour
+ import qualified Oracles.ModuleFiles
+ import Packages
++import qualified Rules.WPC
+ import qualified Rules.BinaryDist
+ import qualified Rules.CabalReinstall
+ import qualified Rules.Compile
+@@ -128,6 +129,7 @@ packageRules = do
+ 
+ buildRules :: Rules ()
+ buildRules = do
++    Rules.WPC.foundationpakRules
+     Rules.BinaryDist.bindistRules
+     Rules.Generate.copyRules
+     Rules.Generate.generateRules
+diff --git a/src/Rules/WPC.hs b/src/Rules/WPC.hs
+new file mode 100644
+index 0000000..e69de29
+-- 
+2.43.0
+

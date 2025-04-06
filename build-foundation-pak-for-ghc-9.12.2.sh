@@ -28,7 +28,7 @@ build_stage2_ghc() {(
   cd ghc-9.12.2
   ./boot.source
   ./configure
-  hadrian/build -j
+  hadrian/build-stack -j
 )}
 
 build_wpc_plugin_with_stage2_ghc() {(
@@ -48,15 +48,15 @@ build_wpc_plugin_with_stage2_ghc() {(
 
 patch_hadrian_set_final_stage_to_stage3() {(
   cd ghc-9.12.2/hadrian
-  git am < ../../patch/ghc-9.12.2/hadrian/0002-set-final-stage-to-stage3.patch
+  git am < ../../../patch/ghc-9.12.2/hadrian/0002-set-final-stage-to-stage3.patch
 )}
 
 build_stage3_ghc_with_wpc_plugin() {(
   WORK_DIR=`pwd`
   cd ghc-9.12.2
   WPC_PLUGIN_GHC_OPTS="stage2.*.ghc.*.opts += -fplugin-trustworthy -fplugin-library=$WORK_DIR/ghc-whole-program-compiler-project/wpc-plugin/libwpc-plugin.so;wpc-plugin-unit;WPC.Plugin;[]"
-  hadrian/build -j "$WPC_PLUGIN_GHC_OPTS"
-  hadrian/build -j foundation-pak --docs=none "$WPC_PLUGIN_GHC_OPTS"
+  hadrian/build-stack -j "$WPC_PLUGIN_GHC_OPTS"
+  hadrian/build-stack -j foundation-pak --docs=none "$WPC_PLUGIN_GHC_OPTS"
 )}
 
 mkdir -p foundation-pak-ghc-9.12.2-wpc

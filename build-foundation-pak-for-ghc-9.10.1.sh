@@ -49,8 +49,8 @@ build_stage2_ghc() {(
 build_wpc_plugin_with_stage2_ghc() {(
   STAGE2_GHC=`pwd`/ghc-9.10.1/_build/stage1/bin/ghc
   git clone https://github.com/zlonast/ghc-whole-program-compiler-project.git
-  git checkout 097745f5515178d44cbf84aea301b444945e9d89
   cd ghc-whole-program-compiler-project/wpc-plugin
+  git checkout 097745f5515178d44cbf84aea301b444945e9d89
 
   echo "packages: *.cabal external-stg-syntax" > cabal.project
   echo "with-compiler: $STAGE2_GHC" >> cabal.project
@@ -79,18 +79,18 @@ cd foundation-pak-ghc-9.10.1-wpc
 
 ghcup set ghc 9.6.6
 
-install_ghc_build_tools
-download_ghc_source_code
-unpack_ghc_source_code_and_add_hadrian_to_git
-patch_hadrian_source_code
-build_stage2_ghc
+# install_ghc_build_tools
+# download_ghc_source_code
+# unpack_ghc_source_code_and_add_hadrian_to_git
+# patch_hadrian_source_code
+# build_stage2_ghc
 build_wpc_plugin_with_stage2_ghc
 patch_hadrian_set_final_stage_to_stage3
 build_stage3_ghc_with_wpc_plugin
 
-# ghcup set 9.10.1
+ghcup set 9.10.1
 
 echo "output foundation pak and ghc-9.10.1 wpc bindist"
 
 ls -lah `pwd`/ghc-9.10.1/_build/foundation-pak/*.tar.*
-ls -lah `pwd`/ghc-9.10.1/_build/bindist/ghc-9.10.1-x86_64-unknown-linux/bin/
+ls -lah `pwd`/ghc-9.10.1/_build/bindist/ghc-9.10.1-x86_64-unknown-linux/bin/ghc/ghc

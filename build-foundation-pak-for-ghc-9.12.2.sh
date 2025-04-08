@@ -1,6 +1,6 @@
 set -x -e
-# set -u
-# set -o pipefail
+
+foundationPak=`pwd`
 
 unpack_ghc_source_code_and_add_hadrian_to_git() {(
   tar xf ghc-9.12.2-src.tar.xz
@@ -16,7 +16,7 @@ patch_hadrian_source_code() {(
   cd ghc-9.12.2/hadrian
   git init
   set +e
-  git am < ../../patch/ghc-9.12.2/hadrian/0001-wpc-9.12.2.patch
+  git am < $foundationPak/patch/ghc-9.12.2/hadrian/0001-wpc-9.12.2.patch
   git add *
   git commit -am "original"
   set -e
@@ -48,7 +48,7 @@ build_wpc_plugin_with_stage2_ghc() {(
 
 patch_hadrian_set_final_stage_to_stage3() {(
   cd ghc-9.12.2/hadrian
-  git am < ../../../patch/ghc-9.12.2/hadrian/0002-set-final-stage-to-stage3.patch
+  git am < $foundationPak/patch/ghc-9.12.2/hadrian/0002-set-final-stage-to-stage3.patch
 )}
 
 build_stage3_ghc_with_wpc_plugin() {(
@@ -64,8 +64,12 @@ cd foundation-pak-ghc-9.12.2-wpc
 
 ghcup set ghc 9.10.1
 
-# cabal install --overwrite-policy=always alex-3.5.1.0 zip-cmd-1.0.1
-# wget https://downloads.haskell.org/~ghc/9.12.2/ghc-9.12.2-src.tar.xz
+### install_ghc_build_tools ###
+cabal install --overwrite-policy=always alex-3.5.1.0 zip-cmd-1.0.1
+
+### download_ghc_source_code ###
+wget https://downloads.haskell.org/~ghc/9.12.2/ghc-9.12.2-src.tar.xz
+
 unpack_ghc_source_code_and_add_hadrian_to_git
 patch_hadrian_source_code
 build_stage2_ghc
@@ -73,7 +77,7 @@ build_wpc_plugin_with_stage2_ghc
 patch_hadrian_set_final_stage_to_stage3
 build_stage3_ghc_with_wpc_plugin
 
-# ghcup set 9.12.2
+ghcup set 9.12.2
 
 ############
 # output foundation pak and ghc-9.12.2 wpc bindist
@@ -82,4 +86,4 @@ build_stage3_ghc_with_wpc_plugin
 echo "output foundation pak and ghc-9.12.2 wpc bindist"
 
 ls -lah `pwd`/ghc-9.12.2/_build/foundation-pak/*.tar.*
-ls -lah `pwd`/ghc-9.12.2/_build/bindist/ghc-9.12.2-x86_64-unknown-linux/bin/
+ls -lah `pwd`/ghc-9.12.2/_build/bindist/ghc-9.12.2-x86_64-unknown-linux/bin/ghc
